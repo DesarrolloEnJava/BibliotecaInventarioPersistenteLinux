@@ -4,6 +4,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotEquals;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.Properties;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,6 +46,52 @@ public class TestLista {
         String ruta = "archivo/lista"; 
     	lista.establecerRuta(ruta);
     	assertEquals(ruta,lista.obtnerRuta());
+    }
+    
+    @Test
+    public void escribirArchivoDePropiedades() {
+    	String propiedadRecuperada = "";
+    	Properties archivoPropiedades = new Properties();
+    	
+    	archivoPropiedades.setProperty("Autor", "Damian");
+    	try {
+			FileWriter escritor = new FileWriter("test_archivo/propiedades");
+			archivoPropiedades.store(escritor, "primera prueba");
+			escritor.close();
+			archivoPropiedades.load(new FileReader("test_archivo/propiedades"));
+			Enumeration<Object> propiedades = archivoPropiedades.keys();
+			while (propiedades.hasMoreElements()) {
+				Object key = propiedades.nextElement();
+				propiedadRecuperada = (String)key + "=" +archivoPropiedades.getProperty((String) key);
+			}
+			}catch(IOException e) {
+			System.out.println("El archivo no se encuentra");
+			e.printStackTrace();
+		}
+    	assertEquals(propiedadRecuperada,"Autor=Damian");
+    }
+    
+    @Test
+    public void agregarLineaArchivoDePropiedades() {
+    	String propiedadRecuperada = "";
+    	Properties archivoPropiedades = new Properties();
+    	
+    	archivoPropiedades.setProperty("Autor", "Damian");
+    	try {
+			FileWriter escritor = new FileWriter("test_archivo/propiedades");
+			archivoPropiedades.store(escritor, "primera prueba");
+			escritor.close();
+			archivoPropiedades.load(new FileReader("test_archivo/propiedades"));
+			Enumeration<Object> propiedades = archivoPropiedades.keys();
+			while (propiedades.hasMoreElements()) {
+				Object key = propiedades.nextElement();
+				propiedadRecuperada = (String)key + "=" +archivoPropiedades.getProperty((String) key);
+			}
+			}catch(IOException e) {
+			System.out.println("El archivo no se encuentra");
+			e.printStackTrace();
+		}
+    	assertEquals(propiedadRecuperada,"Autor=Damian");
     }
 
     @After

@@ -3,6 +3,7 @@ package principal;
 import java.util.Scanner;
 
 public class Libro {
+	private String id;
 	private String tipo;
 	private String titulo;
 	private String autor;
@@ -30,10 +31,12 @@ public class Libro {
 		this.editorial = editorial;
 	}
 	public String getAtributos() {
-		String libro = tipo+" "+titulo+" "+autor+" "+editorial+" "; 
+		String libro = id+""+tipo+" "+titulo+" "+autor+" "+editorial+" "; 
 		return libro;
 	}
 	public void setAtributos(Scanner entrada) {
+		System.out.println("Ingresa el numero de inventario");
+		this.id = entrada.nextLine();
 		System.out.println("Ingresa el titulo");
 		this.titulo = entrada.nextLine();
 		System.out.println("Ingresa el autor");

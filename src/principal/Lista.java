@@ -14,12 +14,6 @@ public class Lista {
 		this.ruta=ruta;
 		establecerContenido(this.ruta);
 	}
-	public String obtnerRuta() {
-		return this.ruta;
-	}
-	public void establecerRuta(String ruta) {
-		this.ruta = ruta;
-	}
 	public String obtenerContenido() {
 		System.out.println("Tu lista: \n");
 		establecerContenido(this.ruta);
@@ -38,6 +32,12 @@ public class Lista {
 			System.out.println("El archivo no se encuentra");
 			e.printStackTrace();
 		}
+	}
+	public String obtnerRuta() {
+		return this.ruta;
+	}
+	public void establecerRuta(String ruta) {
+		this.ruta = ruta;
 	}
 	public void agregarElemento(String elemento){
 		System.out.println();
