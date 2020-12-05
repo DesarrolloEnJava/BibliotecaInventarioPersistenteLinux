@@ -3,7 +3,7 @@ package principal;
 import java.util.Scanner;
 
 public class Main {
-	static Inventario inventario = new Inventario("archivo/Lista");
+	static Inventario inventario = new Inventario("archivo");
 	static Scanner entrada = new Scanner(System.in);
 	
 	public static void main(String[] args) {

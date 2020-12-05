@@ -4,11 +4,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotEquals;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Properties;
+import java.util.Scanner;
 
 import org.junit.After;
 import org.junit.Before;
@@ -92,6 +95,25 @@ public class TestLista {
 			e.printStackTrace();
 		}
     	assertEquals(propiedadRecuperada,"Autor=Damian");
+    }
+    
+    @Test
+    public void obtenerListaDeArchivosEnLaCarpeta() throws IOException {
+    	boolean esundirectorio = false;
+    	try {
+    		File carpeta = new File("test_archivo");
+    		String[] listaDeArchivos = carpeta.list();
+    		if(carpeta.isDirectory()) {
+    			esundirectorio = true;
+    			for (String archivo : listaDeArchivos) {
+    				System.out.println(archivo);
+				}
+    					
+    		}
+    		}catch(NullPointerException e) {
+    		
+    	}
+    	assertEquals(esundirectorio,true);
     }
 
     @After
