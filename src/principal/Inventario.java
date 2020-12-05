@@ -3,6 +3,7 @@ package principal;
 public class Inventario extends Lista {
 		
 	public Inventario(String ruta) {
+		super(ruta);
 		super.establecerRuta(ruta);
 	}
 	public void registrarLibro(String libroNuevo){

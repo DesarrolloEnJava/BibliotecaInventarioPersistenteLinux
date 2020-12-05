@@ -10,9 +10,6 @@ public class Lista {
 	private String ruta=null;
 	private String contenido = null;
 
-	public Lista( ) {
-
-	}
 	public Lista(String ruta) {
 		this.ruta=ruta;
 		establecerContenido(this.ruta);
