@@ -16,7 +16,7 @@ import java.util.Scanner;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import principal.Lista;
+import principal.ListaPropiedades;
 
 /**
  * Una clase de tests con junit 5 El metodo que queramos que se ejecute antes
@@ -28,9 +28,9 @@ import principal.Lista;
  * 
  * @author Chuidiang
  */
-public class TestLista {
+public class TestListaPropiedades {
 
-    private Lista lista;
+    private ListaPropiedades listaPropiedades;
 
     @Before
     public void paraEjecutarAntes() throws Exception {
@@ -38,33 +38,45 @@ public class TestLista {
     }
     
   @Test
-    public void agregarLibro() throws FileNotFoundException, IOException {
+    public void agregarElemento() throws FileNotFoundException, IOException {
         Properties libroDePrueba = new Properties();
         libroDePrueba.setProperty("ruta", "test_archivo/0002");
-        libroDePrueba.setProperty("id", "0001");
-        libroDePrueba.setProperty("Tipo", "prueba");
+        libroDePrueba.setProperty("id", "0002");
+        libroDePrueba.setProperty("autor", "Damian");
+        libroDePrueba.setProperty("titulo", "Prueba2");
+        libroDePrueba.setProperty("fechaPublicacion", "hoy");
         
-        Lista lista = new Lista();
-        lista.agregarElemento(libroDePrueba);
+        ListaPropiedades listaPropiedades = new ListaPropiedades();
+        listaPropiedades.agregarElemento(libroDePrueba);
         
-        libroDePrueba.load(new FileReader("test_archivo/0001"));
+        libroDePrueba.load(new FileReader("test_archivo/0002"));
         String resultado = libroDePrueba.getProperty("id");
         
         assertNotEquals("",resultado);
     }
       
-    //@Test
-    public void leerContenidoDeLaLista() {
-        String resultado = lista.obtenerContenido();
-        assertNotEquals("",resultado);
-    	//assertEquals("Test incrementa", 2.0, suma.incrementa(1.0), 1e-6);
+    @Test
+    public void obtenerElementos() throws FileNotFoundException, IOException {
+        ListaPropiedades listaPropiedades = new ListaPropiedades();
+        String[] listasPropiedades = listaPropiedades.obtenerElementos("test_archivo/");
+        assertEquals("001",listasPropiedades[1]);
+    }
+    
+    @Test
+    public void eliminarElemento() throws FileNotFoundException, IOException {
+    	Properties propiedades = new Properties();
+    	ListaPropiedades listaPropiedades = new ListaPropiedades();
+        propiedades.setProperty("ruta", "test_archivo/0003");
+    	listaPropiedades.borrarElemento(propiedades);
+        propiedades.load(new FileReader("test_archivo/0003"));
+        assertEquals("0002",propiedades);
     }
     
     //@Test
     public void escribirLeerRutaDeLista() {
         String ruta = "archivo/lista"; 
-    	lista.establecerRuta(ruta);
-    	assertEquals(ruta,lista.obtnerRuta());
+    	listaPropiedades.establecerRuta(ruta);
+    	assertEquals(ruta,listaPropiedades.obtnerRuta());
     }
     
     //@Test
@@ -72,7 +84,11 @@ public class TestLista {
     	String propiedadRecuperada = "";
     	Properties archivoPropiedades = new Properties();
     	
-    	archivoPropiedades.setProperty("Autor", "Damian");
+    	archivoPropiedades.setProperty("id", "001");
+    	archivoPropiedades.setProperty("autor", "Damian");
+    	archivoPropiedades.setProperty("titulo", "Prueba1");
+    	archivoPropiedades.setProperty("fechaPublicacion", "hoy");
+    	
     	try {
 			FileWriter escritor = new FileWriter("test_archivo/propiedades");
 			archivoPropiedades.store(escritor, "primera prueba");

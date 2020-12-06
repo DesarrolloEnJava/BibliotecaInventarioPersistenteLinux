@@ -1,5 +1,7 @@
 package principal;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -28,11 +30,11 @@ public class Main {
 		entrada.nextLine();
 		return dato;
 	}
-	public static void ejecutarOpcion(int opcion) {
+	public static void ejecutarOpcion(int opcion) throws FileNotFoundException, IOException {
 		if(opcion == 1) {
 			registrarLibro(obtnerDatosDelLibro());
 		}else if(opcion == 2) {
-			System.out.println(inventario.obtenerInventario());
+			System.out.println(inventario.obtenerInventario("test_archivo/"));
 		}else if(opcion == 3) {
 			System.out.println("Terminamos por hoy, hasta la proxima");
 		}else {

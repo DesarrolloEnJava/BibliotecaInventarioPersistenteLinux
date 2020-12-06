@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 import junit.framework.TestSuite;
 
 @RunWith(Suite.class)
-@SuiteClasses( { TestLista.class })
+@SuiteClasses( { TestListaPropiedades.class })
 public class TestTodos {
 
 }
