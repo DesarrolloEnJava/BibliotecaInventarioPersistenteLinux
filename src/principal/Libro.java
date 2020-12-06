@@ -3,14 +3,25 @@ package principal;
 import java.util.Scanner;
 
 public class Libro {
+	private String ruta;
 	private String id;
-	private String tipo;
 	private String titulo;
 	private String autor;
-	private String editorial;
+	private String fechaPublicacion;
 
-	public Libro(String tipo) {
-		this.tipo = tipo;
+	public Libro(String[] datosDelLibro) {
+		this.id = datosDelLibro[1];
+		this.titulo = datosDelLibro[2];
+		this.autor = datosDelLibro[3];
+		this.fechaPublicacion = datosDelLibro[4];
+		this.ruta = datosDelLibro[0]+id;
+	}
+	public String getRuta() {
+		return ruta;
+	}
+	
+	public String getId() {
+		return id;
 	}
 	public String getTitulo() {
 		return titulo;
@@ -24,24 +35,24 @@ public class Libro {
 	public void setAutor(String autor) {
 		this.autor = autor;
 	}
-	public String getEditorial() {
-		return editorial;
+	public String getFechaPublicacion() {
+		return fechaPublicacion;
 	}
-	public void setEditorial(String editorial) {
-		this.editorial = editorial;
+	public void setFechaPublicacion(String editorial) {
+		this.fechaPublicacion = editorial;
 	}
 	public String getAtributos() {
-		String libro = id+""+tipo+" "+titulo+" "+autor+" "+editorial+" "; 
+		String libro = id+" "+titulo+" "+autor+" "+fechaPublicacion+" "; 
 		return libro;
 	}
 	public void setAtributos(Scanner entrada) {
-		System.out.println("Ingresa el numero de inventario");
+		
 		this.id = entrada.nextLine();
-		System.out.println("Ingresa el titulo");
+		
 		this.titulo = entrada.nextLine();
-		System.out.println("Ingresa el autor");
+		
 		this.autor = entrada.nextLine();
-		System.out.println("Ingresa la editorial");
-		this.editorial = entrada.nextLine();
+		
+		this.fechaPublicacion = entrada.nextLine();
 	}
 }

@@ -4,15 +4,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Properties;
 import java.util.Scanner;
 
 public class Lista {
 	private String ruta=null;
 	private String contenido = null;
 
-	public Lista(String ruta) {
-		this.ruta=ruta;
-		establecerContenido(this.ruta);
+	public Lista() {
+		
 	}
 	public String obtenerContenido() {
 		System.out.println("Tu lista: \n");
@@ -39,13 +39,13 @@ public class Lista {
 	public void establecerRuta(String ruta) {
 		this.ruta = ruta;
 	}
-	public void agregarElemento(String elemento){
+	public void agregarElemento(Properties elemento){
 		System.out.println();
-		escribir(this.ruta,this.contenido+elemento);
+		escribir(elemento);
 		System.out.println("elemento "+elemento+" agregado a la lista\n");
-		establecerContenido(this.ruta);
+		//establecerContenido(this.ruta);
 	}
-	public void borrarElemento(String elemento){
+/*	public void borrarElemento(String elemento){
 		String contenidoNuevo = "";
 		boolean elementoBorrado = false;
 
@@ -66,7 +66,7 @@ public class Lista {
 			System.out.println("elemento no encontrado");
 		}
 		entrada.close();
-	}
+	}*/
 	public void datosDelArchivo() {
 		File archivo = new File("archivo/Lista");
 
@@ -77,10 +77,11 @@ public class Lista {
 		System.out.println("File size in bytes " + archivo.length());
 		System.out.println();
 	}
-	private static void escribir(String ruta, String contenidoNuevo) {
+	private static void escribir(Properties libro) {
+		
 		try {
-			FileWriter escritor = new FileWriter(ruta);
-			escritor.write(contenidoNuevo);
+			FileWriter escritor = new FileWriter(libro.getProperty("ruta"));
+			libro.store(escritor, "primer libro");
 			escritor.close();
 			System.out.println("Se completó la escritura en el archivo");
 			}catch(IOException e) {

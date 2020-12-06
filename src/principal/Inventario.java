@@ -1,12 +1,13 @@
 package principal;
 
+import java.util.Properties;
+
 public class Inventario extends Lista {
 		
-	public Inventario(String ruta) {
-		super(ruta);
-		super.establecerRuta(ruta);
+	public Inventario( ) {
+		
 	}
-	public void registrarLibro(String libroNuevo){
+	public void registrarLibro(Properties libroNuevo){
 		super.agregarElemento(libroNuevo);
 	}
 	public void eliminarLibro(){
