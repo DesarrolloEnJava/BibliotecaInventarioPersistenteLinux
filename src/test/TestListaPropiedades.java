@@ -1,21 +1,21 @@
 package test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+
 import java.util.Enumeration;
 import java.util.Properties;
-import java.util.Scanner;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import principal.ListaPropiedades;
 
 /**
@@ -30,127 +30,83 @@ import principal.ListaPropiedades;
  */
 public class TestListaPropiedades {
 
-    private ListaPropiedades listaPropiedades;
+	@Before
+	public void paraEjecutarAntes() throws Exception {
 
-    @Before
-    public void paraEjecutarAntes() throws Exception {
-    	
-    }
-    
-  @Test
-    public void agregarElemento() throws FileNotFoundException, IOException {
-        Properties libroDePrueba = new Properties();
-        libroDePrueba.setProperty("ruta", "test_archivo/0002");
-        libroDePrueba.setProperty("id", "0002");
-        libroDePrueba.setProperty("autor", "Damian");
-        libroDePrueba.setProperty("titulo", "Prueba2");
-        libroDePrueba.setProperty("fechaPublicacion", "hoy");
-        
-        ListaPropiedades listaPropiedades = new ListaPropiedades();
-        listaPropiedades.agregarElemento(libroDePrueba);
-        
-        libroDePrueba.load(new FileReader("test_archivo/0002"));
-        String resultado = libroDePrueba.getProperty("id");
-        
-        assertNotEquals("",resultado);
-    }
-      
-    @Test
-    public void obtenerElementos() throws FileNotFoundException, IOException {
-        ListaPropiedades listaPropiedades = new ListaPropiedades();
-        String[] listasPropiedades = listaPropiedades.obtenerElementos("test_archivo/");
-        assertEquals("001",listasPropiedades[1]);
-    }
-    
-    @Test
-    public void eliminarElemento() throws FileNotFoundException, IOException {
-    	Properties propiedades = new Properties();
-    	ListaPropiedades listaPropiedades = new ListaPropiedades();
-        propiedades.setProperty("ruta", "test_archivo/0003");
-    	listaPropiedades.borrarElemento(propiedades);
-        propiedades.load(new FileReader("test_archivo/0003"));
-        assertEquals("0002",propiedades);
-    }
-    
-    //@Test
-    public void escribirLeerRutaDeLista() {
-        String ruta = "archivo/lista"; 
-    	listaPropiedades.establecerRuta(ruta);
-    	assertEquals(ruta,listaPropiedades.obtnerRuta());
-    }
-    
-    //@Test
-    public void escribirArchivoDePropiedades() {
-    	String propiedadRecuperada = "";
-    	Properties archivoPropiedades = new Properties();
-    	
-    	archivoPropiedades.setProperty("id", "001");
-    	archivoPropiedades.setProperty("autor", "Damian");
-    	archivoPropiedades.setProperty("titulo", "Prueba1");
-    	archivoPropiedades.setProperty("fechaPublicacion", "hoy");
-    	
-    	try {
-			FileWriter escritor = new FileWriter("test_archivo/propiedades");
-			archivoPropiedades.store(escritor, "primera prueba");
-			escritor.close();
-			archivoPropiedades.load(new FileReader("test_archivo/propiedades"));
-			Enumeration<Object> propiedades = archivoPropiedades.keys();
-			while (propiedades.hasMoreElements()) {
-				Object key = propiedades.nextElement();
-				propiedadRecuperada = (String)key + "=" +archivoPropiedades.getProperty((String) key);
-			}
-			}catch(IOException e) {
-			System.out.println("El archivo no se encuentra");
-			e.printStackTrace();
-		}
-    	assertEquals(propiedadRecuperada,"Autor=Damian");
-    }
-    
-    //@Test
-    public void agregarLineaArchivoDePropiedades() {
-    	String propiedadRecuperada = "";
-    	Properties archivoPropiedades = new Properties();
-    	
-    	archivoPropiedades.setProperty("Autor", "Damian");
-    	try {
-			FileWriter escritor = new FileWriter("test_archivo/propiedades");
-			archivoPropiedades.store(escritor, "primera prueba");
-			escritor.close();
-			archivoPropiedades.load(new FileReader("test_archivo/propiedades"));
-			Enumeration<Object> propiedades = archivoPropiedades.keys();
-			while (propiedades.hasMoreElements()) {
-				Object key = propiedades.nextElement();
-				propiedadRecuperada = (String)key + "=" +archivoPropiedades.getProperty((String) key);
-			}
-			}catch(IOException e) {
-			System.out.println("El archivo no se encuentra");
-			e.printStackTrace();
-		}
-    	assertEquals(propiedadRecuperada,"Autor=Damian");
-    }
-    
-    //@Test
-    public void obtenerListaDeArchivosEnLaCarpeta() throws IOException {
-    	boolean esundirectorio = false;
-    	try {
-    		File carpeta = new File("test_archivo");
-    		String[] listaDeArchivos = carpeta.list();
-    		if(carpeta.isDirectory()) {
-    			esundirectorio = true;
-    			for (String archivo : listaDeArchivos) {
-    				System.out.println(archivo);
-				}
-    					
-    		}
-    		}catch(NullPointerException e) {
-    		
-    	}
-    	assertEquals(esundirectorio,true);
-    }
+	}
 
-    @After
-    public void paraEjecutarDespues() throws Exception {
-    	// Fin de test. Aqui liberar recursos o borrar rastros del test
-    }
+	@Test
+	public void agregarElemento() throws FileNotFoundException, IOException {
+		Properties fichaDePrueba = new Properties();
+		fichaDePrueba.setProperty("ruta", "test_archivo/0002");
+		fichaDePrueba.setProperty("id", "0002");
+		fichaDePrueba.setProperty("autor", "Damian");
+		fichaDePrueba.setProperty("titulo", "Prueba2");
+		fichaDePrueba.setProperty("fechaPublicacion", "hoy");
+
+		ListaPropiedades listaPropiedades = new ListaPropiedades();
+		listaPropiedades.agregarElemento(fichaDePrueba);
+
+		fichaDePrueba.load(new FileReader("test_archivo/0002"));
+		String resultado = fichaDePrueba.getProperty("id");
+
+		assertNotEquals("",resultado);
+	}
+
+	@Test(expected=FileNotFoundException.class)
+	public void eliminarElemento() throws FileNotFoundException, IOException {
+		Properties fichaDePrueba = new Properties();
+		ListaPropiedades listaPropiedades = new ListaPropiedades();
+		String ruta = "test_archivo/0003";
+		fichaDePrueba.setProperty("ruta", ruta);
+		listaPropiedades.agregarElemento(fichaDePrueba);
+		listaPropiedades.borrarElemento(fichaDePrueba);
+		fichaDePrueba.load(new FileReader(ruta));
+	}
+
+	@Test
+	public void obtenerElemento() {
+		Properties fichaDePrueba = new Properties();
+		fichaDePrueba.setProperty("ruta", "test_archivo/0100");
+		fichaDePrueba.setProperty("id", "0100");
+		fichaDePrueba.setProperty("autor", "Damian");
+		fichaDePrueba.setProperty("titulo", "Prueba100");
+		fichaDePrueba.setProperty("fechaPublicacion", "hoy");
+
+		ListaPropiedades listaPropiedades = new ListaPropiedades();
+		listaPropiedades.agregarElemento(fichaDePrueba);
+
+		Properties fichaRecuperada = listaPropiedades.obtenerElemento("test_archivo/0100");
+		String idRecuperado = fichaRecuperada.getProperty("id");
+
+		assertEquals("0100",idRecuperado);
+	}
+
+	@Test
+	public void obtenerListaDeElementos() {
+		ListaPropiedades listaPropiedades = new ListaPropiedades();
+		String ruta = "test_archivo/";
+		String[] fichas = listaPropiedades.obtenerListaDeElementos(ruta);
+		if(!fichas[0].equals("No existe la carpeta") && !fichas[0].equals("La ruta no apunta a una carpeta")) {
+			for (String ficha : fichas) {
+				Properties fichaRecuperada = listaPropiedades.obtenerElemento(ruta+ficha);
+				Enumeration<Object> propiedades = fichaRecuperada.keys();
+
+				while (propiedades.hasMoreElements()) {
+					Object propiedad = propiedades.nextElement();
+					System.out.println(propiedad + " = " + fichaRecuperada.get(propiedad));
+				}	
+			}
+		}else if(fichas[0].equals("No existe la carpeta")) {
+			fail("No existe la carpeta");
+		}else {
+			fail("La ruta no apunta a una carpeta");
+		}
+	}
+
+	@After
+	public void paraEjecutarDespues() throws Exception {
+
+	}
 
 }
